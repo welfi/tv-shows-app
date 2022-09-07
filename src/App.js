@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import RouterConfig from "./routing/RouterConfig";
+import { darkTheme, lightTheme } from "styles/theme";
+import { useSelector } from "react-redux";
+import "styles/globalStyles.css";
 
 function App() {
+  const { mode } = useSelector((state) => state.theme);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={handleTheme(mode)}>
+      <CssBaseline />
+      <RouterConfig />
+    </ThemeProvider>
   );
 }
+
+const handleTheme = (mode) => {
+  switch (mode) {
+    case "light":
+      return lightTheme;
+    case "dark":
+      return darkTheme;
+    case "browser":
+      return window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? darkTheme
+        : lightTheme;
+
+    default:
+      return darkTheme;
+  }
+};
 
 export default App;
