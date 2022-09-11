@@ -7,14 +7,14 @@ import "styles/globalStyles.css";
 function App() {
   const { mode } = useSelector((state) => state.theme);
   return (
-    <ThemeProvider theme={handleTheme(mode)}>
+    <ThemeProvider theme={resolveTheme(mode)}>
       <CssBaseline />
       <RouterConfig />
     </ThemeProvider>
   );
 }
 
-const handleTheme = (mode) => {
+const resolveTheme = (mode) => {
   switch (mode) {
     case "light":
       return lightTheme;
